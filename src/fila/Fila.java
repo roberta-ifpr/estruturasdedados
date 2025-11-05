@@ -1,6 +1,6 @@
-package lista;
+package fila;
 
-public class ListaEncadeada<T> {
+public class Fila<T> {
     private No<T> inicio = null;
     private No<T> fim = null;
     private int tamanho = 0;
@@ -17,18 +17,6 @@ public class ListaEncadeada<T> {
         this.tamanho++;
     }
 
-    public void adicionaInicio(T elemento) {
-        No<T> novoNo = new No<T>(elemento);
-        if (tamanho == 0) {
-            this.fim = novoNo;
-
-        } else {
-            novoNo.setProximo(inicio);
-        }
-        this.inicio = novoNo;
-        this.tamanho++;
-    }
-
     public No<T> busca(int posicao) {
         No<T> noAtual = this.inicio;
         for (int i = 0; i < posicao; i++) {
@@ -37,23 +25,7 @@ public class ListaEncadeada<T> {
         return noAtual;
     }
 
-    // adiciona em uma posição especifica
-    public void adiciona(int posicao, T elemento) {
-        if (posicao == 0) {
-            this.adicionaInicio(elemento);
-        } else {
-            if (posicao == tamanho) {
-                this.adiciona(elemento);
-            } else {
-                No<T> noAnterior = busca(posicao - 1);
-                No<T> proximoNo = noAnterior.getProximo(); // ou busca(posicao);
-                No<T> novoNo = new No<T>(elemento);
-                noAnterior.setProximo(novoNo);
-                novoNo.setProximo(proximoNo);
-                this.tamanho++;
-            }
-        }
-    }
+  
 
     // retorna o elemento de uma posição
     public T get(int posicao) {
@@ -97,39 +69,6 @@ public class ListaEncadeada<T> {
         this.tamanho--;
         if (tamanho == 0) {
             this.fim = null;
-        }
-    }
-
-    // remove do final
-    public void removeFim() {
-        if (tamanho == 0) {
-            throw new IllegalStateException("Lista vazia");
-        }
-        if (tamanho == 1) {
-            this.inicio = null;
-            this.fim = null;
-        } else {
-            No<T> penultimo = busca(tamanho - 2);
-            penultimo.setProximo(null);
-            this.fim = penultimo;
-        }
-        this.tamanho--;
-    }
-
-    // remove de qualquer posição
-    public void remove(int posicao) {
-        if (posicao < 0 || posicao >= tamanho) {
-            throw new IllegalArgumentException("Posição inválida");
-        }
-        if (posicao == 0) {
-            removeInicio();
-        } else if (posicao == tamanho - 1) {
-            removeFim();
-        } else {
-            No<T> anterior = busca(posicao - 1);
-            No<T> atual = anterior.getProximo();
-            anterior.setProximo(atual.getProximo());
-            this.tamanho--;
         }
     }
 
